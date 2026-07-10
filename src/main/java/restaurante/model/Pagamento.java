@@ -71,12 +71,6 @@ public class Pagamento {
       @ assignable this.confirmado;
       @ skipesc
       @*/
-    // Contrato completo (ensures pedido.getStatus()==PAGO, mesa LIVRE, signals de
-    // PagamentoInvalidoException/PedidoInvalidoException) foi simplificado e marcado
-    // com skipesc: o ESC do OpenJML não conclui a prova em tempo hábil (>5min) ao
-    // encadear chamadas a métodos de outros objetos (Pedido.calcularTotal(),
-    // Pedido.pedidoPago(), Mesa.desocuparMesa()) — explosão de estados por aliasing
-    // entre objetos relacionados (Pagamento -> Pedido -> Mesa).
     public void confirmarPagamento() {
         if(confirmado) {
             throw new PagamentoInvalidoException("Pagamento já foi confirmado.");
