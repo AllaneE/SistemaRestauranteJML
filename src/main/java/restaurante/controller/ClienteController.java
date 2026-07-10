@@ -30,6 +30,18 @@ public class ClienteController {
         throw new ClienteNaoEncontradoException("Cliente com ID " + id + " não encontrado.");
     }
 
+    public Cliente consultarClientePorNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new restaurante.exception.ValorInvalidoException("Nome do cliente não pode ser vazio.");
+        }
+        for (Cliente cliente : clientes) {
+            if (cliente.getNome().equalsIgnoreCase(nome.trim())) {
+                return cliente;
+            }
+        }
+        throw new ClienteNaoEncontradoException("Cliente com nome \"" + nome + "\" não encontrado.");
+    }
+
     public void atualizarCliente(int id, String novoNome, String novoTelefone) {
         Cliente cliente = consultarCliente(id);
         cliente.atualizarDados(novoNome, novoTelefone);

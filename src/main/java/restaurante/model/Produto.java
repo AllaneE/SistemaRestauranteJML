@@ -26,6 +26,18 @@ public class Produto {
     @ensures this.ativo == ativo;
     @*/
     public Produto(int id, String nome, CategoriaProduto categoria, double preco, boolean ativo) {
+        if (id <= 0) {
+            throw new restaurante.exception.ValorInvalidoException("O ID do produto deve ser maior que zero.");
+        }
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new restaurante.exception.ValorInvalidoException("Nome do produto não pode ser vazio.");
+        }
+        if (categoria == null) {
+            throw new restaurante.exception.ValorInvalidoException("Categoria do produto não pode ser nula.");
+        }
+        if (preco <= 0.0) {
+            throw new restaurante.exception.ValorInvalidoException("Preço do produto deve ser positivo.");
+        }
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
@@ -85,7 +97,7 @@ public class Produto {
     @ signals (restaurante.exception.ValorInvalidoException e) (novoPreco < 0);
     @*/
     public void atualizarPreco(double novoPreco) {
-        if (novoPreco < 0) {
+        if (novoPreco <= 0) {
             throw new restaurante.exception.ValorInvalidoException("Preço do produto não pode ser negativo.");
         }
         this.preco = novoPreco;

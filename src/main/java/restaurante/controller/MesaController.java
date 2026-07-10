@@ -16,6 +16,12 @@ public class MesaController {
     private final List<Mesa> mesas = new ArrayList<>();
 
     public Mesa CadastroMesa(int numero, int capacidade){
+        for (Mesa mesaExistente : mesas) {
+            if (mesaExistente.getNumero() == numero) {
+                throw new restaurante.exception.MesaJaCadastradaException(
+                        "Já existe uma mesa cadastrada com o número " + numero + ".");
+            }
+        }
         Mesa mesa = new Mesa(numero, capacidade);
         mesas.add(mesa);
         return mesa;

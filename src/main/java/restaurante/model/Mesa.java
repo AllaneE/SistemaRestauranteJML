@@ -20,6 +20,12 @@ public class Mesa {
       @ ensures this.status == StatusMesa.LIVRE;
       @*/
     public Mesa(int numero, int capacidade) {
+        if (numero <= 0) {
+            throw new restaurante.exception.ValorInvalidoException("O número da mesa deve ser maior que zero.");
+        }
+        if (capacidade <= 0) {
+            throw new restaurante.exception.ValorInvalidoException("A capacidade da mesa deve ser maior que zero.");
+        }
         this.numero = numero;
         this.capacidade = capacidade;
         this.status = StatusMesa.LIVRE; // Inicialmente, a mesa está livre

@@ -60,9 +60,9 @@ public class ReservaView {
 
     private void solicitar() {
         try {
-            System.out.print("ID do cliente: ");
-            int idCliente = lerOpcao();
-            Cliente cliente = clienteController.consultarCliente(idCliente);
+            System.out.print("Nome do cliente: ");
+            String nomeCliente = scanner.nextLine().trim();
+            Cliente cliente = clienteController.consultarClientePorNome(nomeCliente);
 
             System.out.print("Número da mesa: ");
             int numeroMesa = lerOpcao();

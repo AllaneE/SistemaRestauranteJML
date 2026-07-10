@@ -41,6 +41,29 @@ public class Reserva {
       @ ensures this.status == StatusReserva.AGENDADA;
       @*/
     public Reserva(int id, Cliente cliente, Mesa mesa, LocalDate data, LocalTime horario, int quantidadePessoas) {
+        if (id <= 0) {
+            throw new ValorInvalidoException("O ID da reserva deve ser maior que zero.");
+        }
+        if (cliente == null) {
+            throw new ValorInvalidoException("Cliente não pode ser nulo.");
+        }
+        if (mesa == null) {
+            throw new ValorInvalidoException("Mesa não pode ser nula.");
+        }
+        if (data == null) {
+            throw new ValorInvalidoException("Data não pode ser nula.");
+        }
+        if (horario == null) {
+            throw new ValorInvalidoException("Horário não pode ser nulo.");
+        }
+        if (quantidadePessoas <= 0) {
+            throw new ValorInvalidoException("A quantidade de pessoas deve ser maior que zero.");
+        }
+        if (quantidadePessoas > mesa.getCapacidade()) {
+            throw new ValorInvalidoException(
+                    "A quantidade de pessoas (" + quantidadePessoas + ") excede a capacidade da mesa "
+                            + mesa.getNumero() + " (" + mesa.getCapacidade() + ").");
+        }
         this.id = id;
         this.cliente = cliente;
         this.mesa = mesa;

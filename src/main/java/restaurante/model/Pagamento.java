@@ -28,6 +28,18 @@ public class Pagamento {
       @ ensures this.confirmado == false;
       @*/
     public Pagamento(int id, Pedido pedido, FormaPagamento formaPagamento, double valorPago) {
+        if (id <= 0) {
+            throw new restaurante.exception.ValorInvalidoException("O ID do pagamento deve ser maior que zero.");
+        }
+        if (pedido == null) {
+            throw new restaurante.exception.ValorInvalidoException("Pedido não pode ser nulo.");
+        }
+        if (formaPagamento == null) {
+            throw new restaurante.exception.ValorInvalidoException("Forma de pagamento não pode ser nula.");
+        }
+        if (valorPago < 0.0) {
+            throw new restaurante.exception.ValorInvalidoException("O valor pago não pode ser negativo.");
+        }
         this.id = id;
         this.pedido = pedido;
         this.formaPagamento = formaPagamento;

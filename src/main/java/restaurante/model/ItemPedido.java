@@ -16,6 +16,12 @@ public class ItemPedido {
       @ ensures this.quantidade == quantidade;
       @*/
     public ItemPedido(Produto produto, int quantidade) {
+        if (produto == null) {
+            throw new ValorInvalidoException("Produto não pode ser nulo.");
+        }
+        if (quantidade <= 0) {
+            throw new ValorInvalidoException("A quantidade deve ser um valor positivo.");
+        }
         this.produto = produto;
         this.quantidade = quantidade;
     }

@@ -18,6 +18,15 @@ public class Cliente {
       @ ensures this.telefone == telefone;
       @*/
     public Cliente(int id, String nome, String telefone) {
+        if (id <= 0) {
+            throw new restaurante.exception.ValorInvalidoException("O ID do cliente deve ser maior que zero.");
+        }
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new restaurante.exception.ValorInvalidoException("Nome do cliente não pode ser vazio.");
+        }
+        if (telefone == null || telefone.trim().isEmpty()) {
+            throw new restaurante.exception.ValorInvalidoException("Telefone do cliente não pode ser vazio.");
+        }
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;

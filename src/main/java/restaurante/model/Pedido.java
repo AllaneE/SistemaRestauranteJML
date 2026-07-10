@@ -32,6 +32,15 @@ public class Pedido {
       @ ensures this.status == StatusPedido.ABERTO;
       @*/
     public Pedido(int id, Cliente cliente, Mesa mesa) {
+        if (id <= 0) {
+            throw new ValorInvalidoException("O ID do pedido deve ser maior que zero.");
+        }
+        if (cliente == null) {
+            throw new ValorInvalidoException("Cliente não pode ser nulo.");
+        }
+        if (mesa == null) {
+            throw new ValorInvalidoException("Mesa não pode ser nula.");
+        }
         this.id = id;
         this.cliente = cliente;
         this.mesa = mesa;

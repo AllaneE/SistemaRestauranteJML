@@ -23,7 +23,7 @@ public class ReservaController {
         if(mesa.getStatus() == StatusMesa.MANUTENCAO) {
             throw new MesaIndisponivelException("Mesa " + mesa.getNumero() + " está em manutenção.");
         }
-        Reserva novaReserva = new Reserva(proximoId++, cliente, mesa, data, hora, quantidadePessoas);
+        Reserva novaReserva = new Reserva(proximoId, cliente, mesa, data, hora, quantidadePessoas);
         for(Reserva existente : reservas) {
             if(existente.conflito(novaReserva)) {
                 throw new ReservaIndisponivelException("A mesa " + mesa.getNumero() + " já está reservada para o horário solicitado.");
