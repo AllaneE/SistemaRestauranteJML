@@ -8,9 +8,9 @@ public class Mesa {
     /*@ public invariant status != null; @*/
 
 
-    private final int numero;
-    private final int capacidade;
-    private StatusMesa status;
+    private final /*@ spec_public @*/ int numero;
+    private final /*@ spec_public @*/ int capacidade;
+    private /*@ spec_public @*/ StatusMesa status;
 
     /*@ 
       @ requires numero > 0;

@@ -5,14 +5,14 @@ public class Cliente {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant telefone != null && !telefone.equals(""); @*/
 
-    private final int id;
-    private String nome;
-    private String telefone;
+    private final /*@ spec_public @*/ int id;
+    private /*@ spec_public @*/ String nome;
+    private /*@ spec_public @*/ String telefone;
 
-    /*@ 
+    /*@
       @ requires id > 0;
-      @ requires nome != null && !nome.trim().isEmpty();
-      @ requires telefone != null && !telefone.trim().isEmpty();
+      @ requires nome != null && !nome.isEmpty();
+      @ requires telefone != null && !telefone.isEmpty();
       @ ensures this.id == id;
       @ ensures this.nome == nome;
       @ ensures this.telefone == telefone;
@@ -47,14 +47,14 @@ public class Cliente {
         return telefone;
     }
 
-    /*@ 
-      @ requires novoNome != null && !novoNome.trim().isEmpty();
-      @ requires novoTelefone != null && !novoTelefone.trim().isEmpty();
+    /*@
+      @ requires novoNome != null && !novoNome.isEmpty();
+      @ requires novoTelefone != null && !novoTelefone.isEmpty();
       @ assignable this.nome, this.telefone;
       @ ensures this.nome == novoNome;
       @ ensures this.telefone == novoTelefone;
       @ signals (restaurante.exception.ValorInvalidoException e)
-      @         (novoNome == null || novoNome.trim().isEmpty() || novoTelefone == null || novoTelefone.trim().isEmpty());
+      @         (novoNome == null || novoNome.isEmpty() || novoTelefone == null || novoTelefone.isEmpty());
       @*/
     public  void atualizarDados(String novoNome, String novoTelefone){
         if(novoNome == null || novoNome.trim().isEmpty()){

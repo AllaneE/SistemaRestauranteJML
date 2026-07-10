@@ -15,11 +15,11 @@ public class Pedido {
     /*@ public invariant itens != null; @*/
     /*@ public invariant status != null; @*/
 
-    private final int id;
-    private final Cliente cliente;
-    private final Mesa mesa;
-    private final List<ItemPedido> itens;
-    private StatusPedido  status;
+    private final /*@ spec_public @*/ int id;
+    private final /*@ spec_public @*/ Cliente cliente;
+    private final /*@ spec_public @*/ Mesa mesa;
+    private final /*@ spec_public @*/ List<ItemPedido> itens;
+    private /*@ spec_public @*/ StatusPedido  status;
 
     /*@
       @ requires id > 0;

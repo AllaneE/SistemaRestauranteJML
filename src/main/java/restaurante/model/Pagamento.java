@@ -10,11 +10,11 @@ public class Pagamento {
     /*@ public invariant formaPagamento != null; @*/
     /*@ public invariant valorPago >= 0.0; @*/
 
-    private final int id;
-    private final Pedido pedido;
-    private final FormaPagamento formaPagamento;
-    private final double valorPago;
-    private boolean confirmado;
+    private final /*@ spec_public @*/ int id;
+    private final /*@ spec_public @*/ Pedido pedido;
+    private final /*@ spec_public @*/ FormaPagamento formaPagamento;
+    private final /*@ spec_public @*/ double valorPago;
+    private /*@ spec_public @*/ boolean confirmado;
 
     /*@
       @ requires id > 0;

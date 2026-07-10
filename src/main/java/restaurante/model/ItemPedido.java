@@ -6,8 +6,8 @@ public class ItemPedido {
     /*@ public invariant produto != null; @*/
     /*@ public invariant quantidade > 0; @*/
 
-    private final Produto produto;
-    private int quantidade;
+    private final /*@ spec_public @*/ Produto produto;
+    private /*@ spec_public @*/ int quantidade;
 
     /*@
       @ requires produto != null;

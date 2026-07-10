@@ -8,15 +8,15 @@ public class Produto {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant categoria != null; @*/
 
-    private final int id;
-    private String nome;
-    private CategoriaProduto categoria;
-    private double preco;
-    private boolean ativo;
+    private final /*@ spec_public @*/ int id;
+    private /*@ spec_public @*/ String nome;
+    private /*@ spec_public @*/ CategoriaProduto categoria;
+    private /*@ spec_public @*/ double preco;
+    private /*@ spec_public @*/ boolean ativo;
 
     /*@
     @ requires id >0;
-    @ requires nome != null && !nome.trim().isEmpty();
+    @ requires nome != null && !nome.isEmpty();
     @ requires categoria != null;
     @ requires preco >= 0.0;
     @ ensures this.id == id;
@@ -70,14 +70,14 @@ public class Produto {
         return ativo;
     }
 
-    /*@ 
-      @ requires novoNome != null && !novoNome.trim().isEmpty();
+    /*@
+      @ requires novoNome != null && !novoNome.isEmpty();
       @ requires novaCategoria != null;
       @ assignable this.nome, this.categoria;
       @ ensures this.nome == novoNome;
       @ ensures this.categoria == novaCategoria;
-      @ signals (restaurante.exception.ValorInvalidoException e) 
-      @         (novoNome == null || novoNome.trim().isEmpty() || novaCategoria == null);
+      @ signals (restaurante.exception.ValorInvalidoException e)
+      @         (novoNome == null || novoNome.isEmpty() || novaCategoria == null);
       @*/
     public void atualizarDados(String novoNome, CategoriaProduto novaCategoria) {
         if (novoNome == null || novoNome.trim().isEmpty()) {

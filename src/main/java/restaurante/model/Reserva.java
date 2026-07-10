@@ -17,13 +17,13 @@ public class Reserva {
     /*@ public invariant quantidadePessoas <= mesa.getCapacidade(); @*/
     /*@ public invariant status != null; @*/
 
-    private final int id;
-    private final Cliente cliente;
-    private final Mesa mesa;
-    private final LocalDate data;
-    private final LocalTime horario;
-    private final int quantidadePessoas;
-    private StatusReserva status;
+    private final /*@ spec_public @*/ int id;
+    private final /*@ spec_public @*/ Cliente cliente;
+    private final /*@ spec_public @*/ Mesa mesa;
+    private final /*@ spec_public @*/ LocalDate data;
+    private final /*@ spec_public @*/ LocalTime horario;
+    private final /*@ spec_public @*/ int quantidadePessoas;
+    private /*@ spec_public @*/ StatusReserva status;
 
     /*@
       @ requires id > 0;
