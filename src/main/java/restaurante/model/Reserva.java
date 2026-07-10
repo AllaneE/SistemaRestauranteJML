@@ -15,11 +15,6 @@ public class Reserva {
     /*@ public invariant horario != null; @*/
     /*@ public invariant quantidadePessoas > 0; @*/
     /*@ public invariant status != null; @*/
-    // A regra quantidadePessoas <= mesa.getCapacidade() foi removida do invariante
-    // de classe (mantida apenas como requires no construtor): como invariante,
-    // ela exige uma chamada de método heap-dependente (mesa.getCapacidade()) ser
-    // reprovada em toda entrada/saída de método de Reserva, mesmo em métodos que
-    // não alteram mesa nem quantidadePessoas, o que o ESC não resolve.
 
     private final /*@ spec_public @*/ int id;
     private final /*@ spec_public @*/ Cliente cliente;
@@ -138,9 +133,6 @@ public class Reserva {
         status = StatusReserva.CANCELADA;
     }
 
-    // assignable \everything (mutação cross-object via mesa.ocuparMesa()) somado à
-    // pós-condição heap-dependente mesa.getStatus() torna a prova impraticável
-    // para o ESC (mesma classe de problema de Pagamento.confirmarPagamento()).
     /*@
       @ requires this.status == StatusReserva.AGENDADA || this.status == StatusReserva.CONFIRMADA;
       @ requires mesa.getStatus() == StatusMesa.LIVRE;
@@ -180,10 +172,6 @@ public class Reserva {
         status = StatusReserva.FINALIZADA;
     }
 
-    // O contrato depende de LocalDate.equals()/LocalTime.equals(), métodos da
-    // biblioteca padrão sem especificação JML completa (Object.jml genérico exige
-    // pré-condições que o ESC não consegue estabelecer para estes tipos). skipesc
-    // evita o falso positivo mantendo a documentação da regra de negócio.
     /*@
       @ requires outraReserva != null ==> outraReserva.getData() != null && outraReserva.getHorario() != null;
       @ ensures outraReserva == null ==> \result == false;
