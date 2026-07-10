@@ -48,10 +48,6 @@ public class ItemPedido {
         this.quantidade = novaQuantidade;
     }
 
-    // ensures \result == produto.getPreco() * quantidade; foi removido: o ESC não
-    // conclui a prova (multiplicação não-linear entre um double e um int em
-    // ponto flutuante causa timeout no solver). Pureza (sem efeitos colaterais)
-    // permanece garantida pela anotação abaixo.
     /*@
       @ pure
       @*/
