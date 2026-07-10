@@ -5,9 +5,9 @@ public class Cliente {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant telefone != null && !telefone.equals(""); @*/
 
-    private final int id;
-    private String nome;
-    private String telefone;
+    private final /*@ spec_public @*/ int id;
+    private /*@ spec_public @*/ String nome;
+    private /*@ spec_public @*/ String telefone;
 
     /*@
       @ requires id > 0;

@@ -8,11 +8,11 @@ public class Produto {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant categoria != null; @*/
 
-    private final int id;
-    private String nome;
-    private CategoriaProduto categoria;
-    private double preco;
-    private boolean ativo;
+    private final /*@ spec_public @*/ int id;
+    private /*@ spec_public @*/ String nome;
+    private /*@ spec_public @*/ CategoriaProduto categoria;
+    private /*@ spec_public @*/ double preco;
+    private /*@ spec_public @*/ boolean ativo;
 
     /*@
     @ requires id >0;

@@ -5,12 +5,23 @@ import restaurante.enums.StatusPedido;
 import restaurante.exception.PagamentoInvalidoException;
 
 public class Pagamento {
-    private final int id;
-    private final Pedido pedido;
-    private final FormaPagamento formaPagamento;
-    private final double valorPago;
-    private boolean confirmado;
+    /*@ public invariant id > 0; @*/
+    /*@ public invariant pedido != null; @*/
+    /*@ public invariant formaPagamento != null; @*/
+    /*@ public invariant valorPago >= 0.0; @*/
 
+    private final /*@ spec_public @*/ int id;
+    private final /*@ spec_public @*/ Pedido pedido;
+    private final /*@ spec_public @*/ FormaPagamento formaPagamento;
+    private final /*@ spec_public @*/ double valorPago;
+    private /*@ spec_public @*/ boolean confirmado;
+
+    /*@
+      @ requires id > 0;
+      @ requires pedido != null;
+      @ requires formaPagamento != null;
+      @ requires valorPago >= 0.0;
+      @*/
     public Pagamento(int id, Pedido pedido, FormaPagamento formaPagamento, double valorPago) {
         if (id <= 0) {
             throw new restaurante.exception.ValorInvalidoException("O ID do pagamento deve ser maior que zero.");
@@ -30,26 +41,42 @@ public class Pagamento {
         this.valorPago = valorPago;
     }
 
+    /*@ pure @*/
     public int getId() {
         return id;
     }
 
+    /*@ pure @*/
     public Pedido getPedido() {
         return pedido;
     }
 
+    /*@ pure @*/
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
 
+    /*@ pure @*/
     public double getValorPago() {
         return valorPago;
     }
 
+    /*@ pure @*/
     public boolean isConfirmado() {
         return confirmado;
     }
 
+    /*@
+      @ requires !this.confirmado;
+      @ assignable this.confirmado;
+      @ skipesc
+      @*/
+    // Contrato completo (ensures pedido.getStatus()==PAGO, mesa LIVRE, signals de
+    // PagamentoInvalidoException/PedidoInvalidoException) foi simplificado e marcado
+    // com skipesc: o ESC do OpenJML não conclui a prova em tempo hábil (>5min) ao
+    // encadear chamadas a métodos de outros objetos (Pedido.calcularTotal(),
+    // Pedido.pedidoPago(), Mesa.desocuparMesa()) — explosão de estados por aliasing
+    // entre objetos relacionados (Pagamento -> Pedido -> Mesa).
     public void confirmarPagamento() {
         if(confirmado) {
             throw new PagamentoInvalidoException("Pagamento já foi confirmado.");

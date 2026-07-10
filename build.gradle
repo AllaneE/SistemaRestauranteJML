@@ -46,6 +46,6 @@ tasks.register('verifyJML', Exec) {
     def openjmlPath = '/home/pulisaglio/Documentos/JML/openjml'
 
     // O comando aponta para a pasta raiz dos seus códigos fonte
-    commandLine openjmlPath, '-esc', '-sourcepath', 'src/main/java', 'src/main/java/restaurante/model/Reserva.java'
+    commandLine openjmlPath, '-esc', '-sourcepath', 'src/main/java', '--dir', 'src/main/java/restaurante/model'
     ignoreExitValue true
 }

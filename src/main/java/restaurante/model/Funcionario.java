@@ -7,9 +7,9 @@ public class Funcionario {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant cargo != null; @*/
 
-    private final int id;
-    private final String nome;
-    private final CargoFuncionario cargo;
+    private final /*@ spec_public @*/ int id;
+    private final /*@ spec_public @*/ String nome;
+    private final /*@ spec_public @*/ CargoFuncionario cargo;
 
     /*@
       @ requires id > 0;
