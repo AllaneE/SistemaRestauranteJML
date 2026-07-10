@@ -73,11 +73,6 @@ public class Pedido {
         return status;
     }
 
-    // A pós-condição sobre this.itens.size() e a invariante de ItemPedido em cada
-    // elemento da lista após List.add() não são decidíveis pelo ESC sem um modelo
-    // axiomático completo de java.util.List (o solver não conclui a prova em
-    // tempo hábil). O contrato abaixo documenta a intenção; skipesc evita o
-    // falso positivo.
     /*@
       @ requires this.status == StatusPedido.ABERTO;
       @ requires produto != null && quantidade > 0 && produto.isAtivo();
@@ -98,8 +93,6 @@ public class Pedido {
         itens.add(new ItemPedido(produto, quantidade));
     }
 
-    // Mesma limitação de List.remove() do ESC descrita em addItem(): skipesc
-    // evita falso positivo na prova de mutação de coleção.
     /*@
       @ requires this.status == StatusPedido.ABERTO;
       @ requires item != null && this.itens.contains(item);
@@ -117,9 +110,6 @@ public class Pedido {
         }
     }
 
-    // ensures \result == (\sum int i; 0 <= i && i < itens.size(); itens.get(i).calcularSubtotal());
-    // foi removido: o quantificador \sum sobre uma lista de objetos com aritmética de
-    // ponto flutuante não é decidível em tempo hábil pelo solver SMT (timeout > 5min).
     /*@
       @ ensures \result >= 0.0;
       @ pure
