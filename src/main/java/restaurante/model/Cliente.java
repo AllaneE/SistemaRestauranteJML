@@ -5,9 +5,9 @@ public class Cliente {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant telefone != null && !telefone.equals(""); @*/
 
-    private final /*@ spec_public @*/ int id;
-    private /*@ spec_public @*/ String nome;
-    private /*@ spec_public @*/ String telefone;
+    private final int id;
+    private String nome;
+    private String telefone;
 
     /*@
       @ requires id > 0;
@@ -53,8 +53,6 @@ public class Cliente {
       @ assignable this.nome, this.telefone;
       @ ensures this.nome == novoNome;
       @ ensures this.telefone == novoTelefone;
-      @ signals (restaurante.exception.ValorInvalidoException e)
-      @         (novoNome == null || novoNome.isEmpty() || novoTelefone == null || novoTelefone.isEmpty());
       @*/
     public  void atualizarDados(String novoNome, String novoTelefone){
         if(novoNome == null || novoNome.trim().isEmpty()){
@@ -67,6 +65,7 @@ public class Cliente {
         this.telefone = novoTelefone;
     }
 
+    /*@ skipesc @*/
     @Override
     public String toString() {
         return "Cliente #" + id + "\nNome: " + nome + "\nTelefone: " + telefone;

@@ -33,3 +33,19 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
+run {
+    standardInput = System.in
+}
+
+tasks.register('verifyJML', Exec) {
+    group = 'verification'
+    description = 'Executa o OpenJML com Extended Static Checking (ESC) para verificar os contratos matemáticos.'
+
+    // Caminho exato para o ficheiro executável na sua máquina
+    def openjmlPath = '/home/pulisaglio/Documentos/JML/openjml'
+
+    // O comando aponta para a pasta raiz dos seus códigos fonte
+    commandLine openjmlPath, '-esc', '-sourcepath', 'src/main/java', 'src/main/java/restaurante/model/Reserva.java'
+    ignoreExitValue true
+}

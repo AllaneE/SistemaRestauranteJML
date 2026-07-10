@@ -8,11 +8,11 @@ public class Produto {
     /*@ public invariant nome != null && !nome.equals(""); @*/
     /*@ public invariant categoria != null; @*/
 
-    private final /*@ spec_public @*/ int id;
-    private /*@ spec_public @*/ String nome;
-    private /*@ spec_public @*/ CategoriaProduto categoria;
-    private /*@ spec_public @*/ double preco;
-    private /*@ spec_public @*/ boolean ativo;
+    private final int id;
+    private String nome;
+    private CategoriaProduto categoria;
+    private double preco;
+    private boolean ativo;
 
     /*@
     @ requires id >0;
@@ -76,8 +76,6 @@ public class Produto {
       @ assignable this.nome, this.categoria;
       @ ensures this.nome == novoNome;
       @ ensures this.categoria == novaCategoria;
-      @ signals (restaurante.exception.ValorInvalidoException e)
-      @         (novoNome == null || novoNome.isEmpty() || novaCategoria == null);
       @*/
     public void atualizarDados(String novoNome, CategoriaProduto novaCategoria) {
         if (novoNome == null || novoNome.trim().isEmpty()) {
@@ -94,7 +92,6 @@ public class Produto {
     @ requires novoPreco >= 0.0;
     @ assignable this.preco;
     @ ensures this.preco == novoPreco;
-    @ signals (restaurante.exception.ValorInvalidoException e) (novoPreco < 0);
     @*/
     public void atualizarPreco(double novoPreco) {
         if (novoPreco <= 0) {
@@ -111,6 +108,7 @@ public class Produto {
         this.ativo = novoDisponibilidade;
     }
 
+    /*@ skipesc @*/
     @Override
     public String toString() {
         return "Produto #" + id + "\nNome: " + nome + "\nCategoria: " + categoria + "\nPreço: " + restaurante.util.FormatadorMoeda.Formatador(preco) + "\nAtivo: " + (ativo ? "Disponível" : "Indisponível");

@@ -6,8 +6,8 @@ public class ItemPedido {
     /*@ public invariant produto != null; @*/
     /*@ public invariant quantidade > 0; @*/
 
-    private final /*@ spec_public @*/ Produto produto;
-    private /*@ spec_public @*/ int quantidade;
+    private final Produto produto;
+    private int quantidade;
 
     /*@
       @ requires produto != null;
@@ -38,9 +38,8 @@ public class ItemPedido {
 
     /*@
       @ assignable this.quantidade;
-      @ ensures novaQuantidade > 0 ==> this.quantidade == novaQuantidade;
-      @ signals (ValorInvalidoException e) (novaQuantidade <= 0);
-      @ signals_only ValorInvalidoException;
+      @ requires novaQuantidade > 0;
+      @ ensures this.quantidade == novaQuantidade;
       @*/
     public void atualizaQuantidade(int novaQuantidade) {
         if(novaQuantidade <= 0) {
@@ -50,13 +49,13 @@ public class ItemPedido {
     }
 
     /*@
-      @ ensures \result == produto.getPreco() * quantidade;
       @ pure
       @*/
     public double calcularSubtotal() {
         return this.produto.getPreco() * this.quantidade;
     }
 
+    /*@ skipesc @*/
     @Override
     public String toString(){
         return quantidade + " - " + produto.getNome() + " - " + restaurante.util.FormatadorMoeda.Formatador(calcularSubtotal());

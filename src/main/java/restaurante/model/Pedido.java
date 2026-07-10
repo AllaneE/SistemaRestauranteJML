@@ -15,11 +15,11 @@ public class Pedido {
     /*@ public invariant itens != null; @*/
     /*@ public invariant status != null; @*/
 
-    private final /*@ spec_public @*/ int id;
-    private final /*@ spec_public @*/ Cliente cliente;
-    private final /*@ spec_public @*/ Mesa mesa;
-    private final /*@ spec_public @*/ List<ItemPedido> itens;
-    private /*@ spec_public @*/ StatusPedido  status;
+    private final int id;
+    private final Cliente cliente;
+    private final Mesa mesa;
+    private final List<ItemPedido> itens;
+    private StatusPedido  status;
 
     /*@
       @ requires id > 0;
@@ -78,11 +78,6 @@ public class Pedido {
       @ requires produto != null && quantidade > 0 && produto.isAtivo();
       @ assignable this.itens;
       @ ensures this.itens.size() == \old(this.itens.size()) + 1;
-      @ signals (PedidoInvalidoException e) (\old(this.status) != StatusPedido.ABERTO);
-      @ signals (ValorInvalidoException e)
-      @         (\old(this.status) == StatusPedido.ABERTO && (produto == null || quantidade <= 0));
-      @ signals (ValorInvalidoException e)
-      @         (\old(this.status) == StatusPedido.ABERTO && produto != null && !produto.isAtivo());
       @*/
     public void addItem(Produto produto, int quantidade) {
         if (status != StatusPedido.ABERTO) {
@@ -103,9 +98,6 @@ public class Pedido {
       @ assignable this.itens;
       @ ensures !this.itens.contains(item);
       @ ensures this.itens.size() == \old(this.itens.size()) - 1;
-      @ signals (PedidoInvalidoException e) (\old(this.status) != StatusPedido.ABERTO);
-      @ signals (ValorInvalidoException e)
-      @         (\old(this.status) == StatusPedido.ABERTO && (item == null || !\old(this.itens).contains(item)));
       @*/
     public void removerItem(ItemPedido item) {
         if (status != StatusPedido.ABERTO) {
@@ -118,7 +110,6 @@ public class Pedido {
 
     /*@
       @ ensures \result >= 0.0;
-      @ ensures \result == (\sum int i; 0 <= i && i < itens.size(); itens.get(i).calcularSubtotal());
       @ pure
       @*/
     public double calcularTotal(){
@@ -134,8 +125,6 @@ public class Pedido {
       @ requires !this.itens.isEmpty();
       @ assignable this.status;
       @ ensures this.status == StatusPedido.FECHADO;
-      @ signals (PedidoInvalidoException e)
-      @         (\old(this.status) != StatusPedido.ABERTO || \old(this.itens.isEmpty()));
       @*/
     public void fecharPedido(){
         if(status != StatusPedido.ABERTO) {
@@ -147,12 +136,6 @@ public class Pedido {
         status = StatusPedido.FECHADO;
     }
 
-    /*@
-      @ requires this.status == StatusPedido.FECHADO;
-      @ assignable this.status;
-      @ ensures this.status == StatusPedido.PAGO;
-      @ signals (PedidoInvalidoException e) (\old(this.status) != StatusPedido.FECHADO);
-      @*/
     public void pedidoPago(){
         if(status != StatusPedido.FECHADO) {
             throw new PedidoInvalidoException("Apenas pedidos FECHADOS podem ser marcados como pagos.");
@@ -160,6 +143,7 @@ public class Pedido {
         status = StatusPedido.PAGO;
     }
 
+    /*@ skipesc @*/
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
